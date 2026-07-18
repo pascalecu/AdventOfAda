@@ -1,0 +1,11 @@
+name = "advent_of_ada"
+description = "Advent of Code solved with Ada 2022"
+version = "0.1.0-dev"
+
+authors = ["Stefan Alecu"]
+maintainers = ["Stefan Alecu <165364995+pascalecu@users.noreply.github.com>"]
+maintainers-logins = ["pascalecu"]
+licenses = "MIT OR Apache-2.0 WITH LLVM-exception"
+website = "https://github.com/pascalecu/AdventOfAda"
+tags = []
+executables = ["aoc"]
