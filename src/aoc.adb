@@ -1,4 +1,6 @@
-procedure AOC is
+with Advent.CLI;
+
+procedure AoC is
 begin
-   null;
-end AOC;
+   Advent.CLI.Run;
+end AoC;
