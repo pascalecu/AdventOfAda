@@ -2,6 +2,7 @@
 /bin/
 /alire/
 /config/
+/inputs/
 
 ### Ada ###
 *.o
