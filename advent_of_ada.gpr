@@ -3,6 +3,8 @@ project Advent_Of_Ada is
 
    for Source_Dirs use (
       "src/", 
+      "src/years/",
+      "src/years/y2015/",
       "config/"
    );
    for Object_Dir use "obj/" & Advent_Of_Ada_Config.Build_Profile;

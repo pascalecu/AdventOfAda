@@ -1,6 +1,4 @@
-with Ada.Strings.Unbounded;
-with Advent.Puzzle;
-with Advent.Types;
+with Advent.Years.Y2015;
 
 package body Advent.Registry is
 
@@ -8,11 +6,16 @@ package body Advent.Registry is
      (Year : Advent.Types.Year_Number; Day : Advent.Types.Day_Number)
       return Advent.Puzzle.Puzzle_Info is
    begin
-      return
-        (Year  => Year,
-         Day   => Day,
-         Title => Ada.Strings.Unbounded.To_Unbounded_String ("TODO"),
-         Solve => null);
+      case Year is
+
+         when 2015   =>
+            return Advent.Years.Y2015.Lookup (Day);
+
+         when others =>
+            raise Constraint_Error
+              with "No puzzles registered for " & Year'Image;
+
+      end case;
    end Lookup;
 
 end Advent.Registry;
