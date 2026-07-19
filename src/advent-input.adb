@@ -11,29 +11,25 @@ package body Advent.Input is
    use Ada.Strings.Unbounded;
    use Ada.Text_IO;
 
-   type Input_Kind is (Puzzle, Example);
-
-   function Read
-     (Kind : Input_Kind;
-      Year : Advent.Types.Year_Number;
-      Day  : Advent.Types.Day_Number)
-      return String;
-
    function Image (Value : Integer) return String;
 
    function Day_Image
-     (Day : Advent.Types.Day_Number)
-      return String;
+     (Day : Advent.Types.Day_Number) return String;
 
-   function Path
-     (Kind : Input_Kind;
-      Year : Advent.Types.Year_Number;
+   function Puzzle_Path
+     (Year : Advent.Types.Year_Number;
       Day  : Advent.Types.Day_Number)
       return String;
 
-   function Load
-     (Filename : String)
-      return String;
+   procedure Run (Year : Advent.Types.Year_Number) is
+   begin
+      Ada.Text_IO.Put_Line ("TODO for Year" & Year'Image);
+   end Run;
+
+   procedure Run_All is
+   begin
+      Ada.Text_IO.Put_Line ("TODO Run_All");
+   end Run_All;
 
    ----------
    -- Image --
@@ -50,8 +46,7 @@ package body Advent.Input is
 
    function Day_Image
      (Day : Advent.Types.Day_Number)
-      return String
-   is
+      return String is
    begin
       if Day < 10 then
          return "0" & Image (Integer (Day));
@@ -60,51 +55,38 @@ package body Advent.Input is
       end if;
    end Day_Image;
 
-   ----------
-   -- Path --
-   ----------
+   -----------------
+   -- Puzzle_Path --
+   -----------------
 
-   function Path
-     (Kind : Input_Kind;
-      Year : Advent.Types.Year_Number;
+   function Puzzle_Path
+     (Year : Advent.Types.Year_Number;
       Day  : Advent.Types.Day_Number)
-      return String
-   is
-      Root : constant String :=
-        (case Kind is
-            when Puzzle  => "inputs",
-            when Example => "examples");
+      return String is
    begin
       return
-        Root
-        & "/"
+        "inputs/"
         & Image (Integer (Year))
         & "/day"
         & Day_Image (Day)
         & ".txt";
-   end Path;
+   end Puzzle_Path;
 
-   ----------
-   -- Load --
-   ----------
+   ---------------
+   -- Read_File --
+   ---------------
 
-   function Load
+   function Read_File
      (Filename : String)
-      return String
-   is
+      return String is
       File : File_Type;
       Data : Unbounded_String;
    begin
-
       if not Ada.Directories.Exists (Filename) then
-         raise Name_Error with
-           "Input file not found: " & Filename;
+         raise Name_Error with "Input file not found: " & Filename;
       end if;
 
-      Open
-        (File,
-         In_File,
-         Filename);
+      Open (File, In_File, Filename);
 
       while not End_Of_File (File) loop
          Append (Data, Get_Line (File));
@@ -124,21 +106,7 @@ package body Advent.Input is
             Close (File);
          end if;
          raise;
-   end Load;
-
-   ----------
-   -- Read --
-   ----------
-
-   function Read
-     (Kind : Input_Kind;
-      Year : Advent.Types.Year_Number;
-      Day  : Advent.Types.Day_Number)
-      return String
-   is
-   begin
-      return Load (Path (Kind, Year, Day));
-   end Read;
+   end Read_File;
 
    ----------
    -- Read --
@@ -147,23 +115,9 @@ package body Advent.Input is
    function Read
      (Year : Advent.Types.Year_Number;
       Day  : Advent.Types.Day_Number)
-      return String
-   is
+      return String is
    begin
-      return Read (Puzzle, Year, Day);
+      return Read_File (Puzzle_Path (Year, Day));
    end Read;
-
-   ------------------
-   -- Read_Example --
-   ------------------
-
-   function Read_Example
-     (Year : Advent.Types.Year_Number;
-      Day  : Advent.Types.Day_Number)
-      return String
-   is
-   begin
-      return Read (Example, Year, Day);
-   end Read_Example;
 
 end Advent.Input;
