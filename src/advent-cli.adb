@@ -1,5 +1,6 @@
 with Ada.Command_Line;
 with Ada.Text_IO;
+with Ada.Exceptions;
 
 with Advent.Runner;
 with Advent.Types;
@@ -93,7 +94,14 @@ package body Advent.CLI is
 
          elsif Command = "run" then
 
-            Handle_Run;
+            begin
+               Handle_Run;
+
+            exception
+               when E : others =>
+                  Put_Line (Ada.Exceptions.Exception_Name (E) & ":");
+                  Put_Line (Ada.Exceptions.Exception_Message (E));
+            end;
 
          elsif Command = "list" then
 
